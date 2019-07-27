@@ -1,0 +1,25 @@
+// CODE
+
+add null to parents
+if tag is opening:
+	add node to nodes
+	join node with last element of #parents
+	add node to #parents
+else:
+	remove last element of #parents
+	
+	
+// VARIABLES
+
+	
+#nodes:
+	area: null
+	levels: area
+	level: levels
+	level: levels
+	transitions: area
+	transition: transitions
+	transition: transitions
+
+#parents:
+	null

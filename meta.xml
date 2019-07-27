@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<area id="ar1">
+    <levels>
+        <level id="0" lvlnum="0"/><level id="1" lvlnum="1"/>
+    </levels>
+    <transitions>
+        <transition>
+            <loc1 area="ar1" lvl="0" pos="143,105"/>
+            <loc2 area="ar1" lvl="1" pos="143,95"/>
+        </transition>
+        <transition>
+            <loc1 area="ar1" lvl="0" pos="133,100"/>
+            <loc2 area="ar1" lvl="1" pos="143,91"/>
+        </transition>
+    </transitions>
+</area>
