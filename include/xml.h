@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 #ifndef _XML_H
 #define _XML_H
 
@@ -10,20 +11,22 @@ using namespace std;
 class XmlNode {
     private:
         string name_;
-        string params_;
+        map<string, string> *params_;
         XmlNode *parent_ = nullptr;
         vector<XmlNode*> children_;
         string *xml_;
 
     public:
-        XmlNode(string name, string params);
+        XmlNode(string name, map<string, string> *params);
         XmlNode() {}
         ~XmlNode();
         string getInnerStr();
         XmlNode* getParent() {return parent_;}
+        vector<XmlNode*> getChildren() {return children_;}
+        XmlNode* getChildAt(int id) {return children_.at(id);}
         string getName() {return name_;}
-        string getParams() {return params_;}
         void append(XmlNode *node);
+        string getParam(string name);
         void print();
 };
 
@@ -41,7 +44,8 @@ class XmlParser {
 
         bool nextTag();
         void handleTagName(int &nameEnd, int whiteSpacePos, int tagSize, bool &hasParams);
-
+        map<string, string>* extractParams();
+        
     public:
         XmlParser(string xml);
         XmlNode* parse();

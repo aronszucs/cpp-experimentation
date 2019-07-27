@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 
 #include "xml.h"
 
@@ -12,11 +13,12 @@ XmlNode* XmlParser::parse() {
     vector<XmlNode*> nodes;
     vector<XmlNode*> parents;
     parents.push_back(nullptr);
-
     while (nextTag()) {
         if (currentOpen_) {
             // Add node
-            XmlNode *n = new XmlNode(currentTagName_, currentParams_);
+            map<string, string> *prm = extractParams();
+            XmlNode *n = new XmlNode(currentTagName_, prm);
+            prm->
 
             // Append node to last parent
             XmlNode *p = parents.back();
@@ -30,13 +32,7 @@ XmlNode* XmlParser::parse() {
             parents.pop_back();
         }
     }
-    //delete nodes.back();
-    for (int i = 1; i < nodes.size(); i++) {
-        XmlNode *n = nodes.at(i);
-        n->print();
-    }
-
-    return nullptr;
+    return nodes.front();
 }
 
 XmlParser::XmlParser(string xml) : xml_(xml) {
@@ -46,8 +42,9 @@ XmlParser::XmlParser(string xml) : xml_(xml) {
 bool XmlParser::nextTag() {
     // Start seeker
     seekerStart_ = xml_.find('<', seekerStart_ + 1);
-    if (seekerStart_ == -1)
+    if (seekerStart_ == -1) {
         return false;
+    }
     
     // Full tag
     seekerEnd_ = xml_.find('>', seekerStart_ + 1) + 1;
@@ -69,6 +66,8 @@ bool XmlParser::nextTag() {
         } else {
             currentParams_ = currentTag_.substr(whiteSpacePos, end - 1);
         }
+    } else {
+        currentParams_ = "";
     }
     return true;
 }
@@ -90,4 +89,38 @@ void XmlParser::handleTagName(int &nameEnd, int whiteSpacePos, int tagSize, bool
         currentTagName_ = currentTag_.substr(1, nameEnd);
         currentOpen_ = true;
     }
+}
+
+map<string, string>* XmlParser::extractParams() {
+    int size = currentParams_.size();
+    int beg = -1;
+    string name;
+    string value;
+    bool nameDone = false;
+    char chr;
+    map<string, string> *paramMap = new map<string, string>;
+    for (int i = 0; i < size; i++) {
+        chr = currentParams_[i];
+        if (nameDone) {
+            if (chr == '"') {
+               if (beg == -1) {
+                   beg = i + 1;
+               } else {
+                   value = currentParams_.substr(beg, i - beg);
+                    nameDone = false;
+                    paramMap->insert({name, value});
+                    beg = -1;
+               }
+            }
+        } else {
+            if (chr != ' ' && beg == -1) {
+                beg = i;
+            } else if (chr == '=') {
+                name = currentParams_.substr(beg, i - beg);
+                nameDone = true;
+                beg = -1;
+            }
+        }
+    }
+    return paramMap;
 }

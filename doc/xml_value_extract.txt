@@ -1,0 +1,44 @@
+// Code
+while end is not reached:
+	update chr
+	if nameDone is true:
+		if char is " symbol:
+			if beg is -1:
+				set beg to seeker + 1
+			else:
+				set value as substring of beg and seeker - 1
+				update values with value
+				set nameDone to false
+				set beg to -1
+
+	else:
+		if char is letter and beg is -1:
+			set beg to seeker - 1
+		else if char is = symbol:
+			set name as a substring of beg and seeker - 1
+			append name to names
+			set nameDone as true
+			set beg to -1
+		
+		
+
+
+
+// Variables
+int seeker:
+int beg: -1
+string name: lvl
+string value: 
+
+vector<string> names: area, lvl
+vector<string> values: ar1
+bool nameDone = true
+
+
+
+
+
+//
+
+:  area="ar1" lvl="0" pos="133,100"
+
