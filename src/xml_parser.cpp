@@ -2,21 +2,41 @@
 #include <string>
 #include <vector>
 
-#include "xml_parser.h"
+#include "xml.h"
 
 using namespace std;
 
 
 XmlNode* XmlParser::parse() {
     XmlNode *out;
-    vector<XmlNode> nodes(10);
-
+    vector<XmlNode*> nodes;
+    vector<XmlNode*> parents;
+    parents.push_back(nullptr);
 
     while (nextTag()) {
-        cout << currentParams_ << endl;
+        if (currentOpen_) {
+            // Add node
+            XmlNode *n = new XmlNode(currentTagName_, currentParams_);
+
+            // Append node to last parent
+            XmlNode *p = parents.back();
+            if (p != nullptr)
+                p->append(n);
+            nodes.push_back(n);
+
+            // Add node to parent
+            parents.push_back(n);
+        } else {
+            parents.pop_back();
+        }
     }
-    
-    return out;
+    //delete nodes.back();
+    for (int i = 1; i < nodes.size(); i++) {
+        XmlNode *n = nodes.at(i);
+        n->print();
+    }
+
+    return nullptr;
 }
 
 XmlParser::XmlParser(string xml) : xml_(xml) {
@@ -38,22 +58,7 @@ bool XmlParser::nextTag() {
     int whiteSpacePos = currentTag_.find(' ');
     int tagSize = currentTag_.size();
     bool hasParams;
-    if (whiteSpacePos != -1) {
-        nameEnd = whiteSpacePos;
-        hasParams = true;
-    } else {
-        nameEnd = tagSize -2;
-        hasParams = false;
-    }
-
-    if (currentTag_[1] == '/') {
-        currentTagName_ = currentTag_.substr(2, nameEnd - 1);
-        currentOpen_ = false;
-        
-    } else {
-        currentTagName_ = currentTag_.substr(1, nameEnd);
-        currentOpen_ = true;
-    }
+    handleTagName(nameEnd, whiteSpacePos, tagSize, hasParams);
 
     // Params
     
@@ -68,12 +73,21 @@ bool XmlParser::nextTag() {
     return true;
 }
 
-void XmlParser::handleTagName(int &nameEnd, int &whiteSpacePos, int &tagSize, bool &hasParams) {
+void XmlParser::handleTagName(int &nameEnd, int whiteSpacePos, int tagSize, bool &hasParams) {
+    if (whiteSpacePos != -1) {
+            nameEnd = whiteSpacePos;
+            hasParams = true;
+        } else {
+            nameEnd = tagSize -2;
+            hasParams = false;
+        }
 
-}
-
-
-
-string XmlParser::getCurrentInner() {
-    
+    if (currentTag_[1] == '/') {
+        currentTagName_ = currentTag_.substr(2, nameEnd - 1);
+        currentOpen_ = false;
+        
+    } else {
+        currentTagName_ = currentTag_.substr(1, nameEnd);
+        currentOpen_ = true;
+    }
 }

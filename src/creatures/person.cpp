@@ -15,9 +15,12 @@ Person::~Person() {
     delete [] limbs_;
 }
 
-
 string Person::getName() {
     return name_;
+}
+
+void Person::setName(string name) {
+    name_ = name;
 }
 
 int Person::getNumberOfArms() {

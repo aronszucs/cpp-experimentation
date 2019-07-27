@@ -24,6 +24,7 @@ class Person {
         ~Person();
         void induceAnxiety();
         string getName();
+        void setName(string);
         int getNumberOfArms();
         int getNumberOfLegs();
         static void defineMeaningOfPersonhood();

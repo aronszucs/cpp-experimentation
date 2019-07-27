@@ -3,7 +3,8 @@
 #include <vector>
 
 #include "file_reader.h"
-#include "xml_parser.h"
+#include "xml.h"
+#include "person.h"
 
 using namespace std;
 
@@ -20,11 +21,13 @@ class Data {
 };
 
 int main() {
-    FileReader rdr("meta.xml");
+    FileReader rdr("0.tr");
     string xml = rdr.read();
 
     XmlParser parser(xml);
     XmlNode *root = parser.parse();
+
+
 
     return 0;
 }
