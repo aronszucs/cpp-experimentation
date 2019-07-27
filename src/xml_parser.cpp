@@ -8,6 +8,8 @@
 using namespace std;
 
 
+
+
 XmlNode* XmlParser::parse() {
     XmlNode *out;
     vector<XmlNode*> nodes;
@@ -16,6 +18,7 @@ XmlNode* XmlParser::parse() {
     while (nextTag()) {
         if (currentOpen_) {
             // Add node
+
             map<string, string> *prm = extractParams();
             XmlNode *n = new XmlNode(currentTagName_, prm);
 
@@ -98,8 +101,12 @@ map<string, string>* XmlParser::extractParams() {
     bool nameDone = false;
     char chr;
     map<string, string> *paramMap = new map<string, string>;
+
+    // Traverse through characters
     for (int i = 0; i < size; i++) {
         chr = currentParams_[i];
+
+        // When param name is already determined
         if (nameDone) {
             if (chr == '"') {
                if (beg == -1) {
@@ -111,6 +118,8 @@ map<string, string>* XmlParser::extractParams() {
                     beg = -1;
                }
             }
+        
+        // When determining param name
         } else {
             if (chr != ' ' && beg == -1) {
                 beg = i;

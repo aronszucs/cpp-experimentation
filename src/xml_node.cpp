@@ -74,7 +74,6 @@ void XmlNode::recursiveTreeFetch(XmlNode *node, vector<XmlNode*> &nodes) {
         nodes.push_back(n);
         recursiveTreeFetch(n, nodes);
     }
-
 }
 
 vector<XmlNode*> XmlNode::fetchAllFromTree() {

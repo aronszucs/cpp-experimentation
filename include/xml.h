@@ -30,6 +30,8 @@ class XmlNode {
         string getParam(string name);
         vector<string> getParamKeys();
         XmlNode* getRoot();
+        
+        // Free memory occupied by all nodes belonging to this tree
         void DestroyTree();
         void print();
         vector<XmlNode*> fetchAllFromTree();
@@ -40,7 +42,6 @@ class XmlParser {
     private:
         string xml_;
         string currentTag_ ;
-        string currentTagInner_ ;
         string currentTagName_;
         string currentParams_;
         bool currentOpen_;
