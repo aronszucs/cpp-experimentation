@@ -14,7 +14,8 @@ class XmlNode {
         map<string, string> *params_;
         XmlNode *parent_ = nullptr;
         vector<XmlNode*> children_;
-        string *xml_;
+
+        void recursiveTreeFetch(XmlNode *node, vector<XmlNode*> &nodes);
 
     public:
         XmlNode(string name, map<string, string> *params);
@@ -27,7 +28,11 @@ class XmlNode {
         string getName() {return name_;}
         void append(XmlNode *node);
         string getParam(string name);
+        vector<string> getParamKeys();
+        XmlNode* getRoot();
+        void DestroyTree();
         void print();
+        vector<XmlNode*> fetchAllFromTree();
 };
 
 

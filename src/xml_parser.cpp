@@ -18,7 +18,6 @@ XmlNode* XmlParser::parse() {
             // Add node
             map<string, string> *prm = extractParams();
             XmlNode *n = new XmlNode(currentTagName_, prm);
-            prm->
 
             // Append node to last parent
             XmlNode *p = parents.back();
