@@ -1,2 +1,5 @@
+# Comopile:
 make;
-bin/runner
+
+# Run:
+bin/run

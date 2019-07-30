@@ -7,18 +7,26 @@
 using namespace std;
 
 
-
+/**
+ * Limb class; can be used to append Persons with useful appendages.
+ */
 
 class Limb{
-    private:
-        string name;
-        string type;
+private:
+    string name;
 
-    public:
-        Limb();
-        Limb(string newName);
-        string getName();
-        string getType();
-        string getHoldable();
+    string type;
+
+
+public:
+    Limb();
+
+    Limb(string newName);
+
+    string getName();
+
+    string getType();
+
+    string getHoldable();
 };
 #endif

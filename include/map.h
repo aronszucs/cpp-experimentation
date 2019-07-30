@@ -9,8 +9,10 @@ using namespace std;
 
 
 
-
-class Map{
+/**
+ * 
+ */
+struct Map{
     private:
         int sizeX_;
         int sizeY_;

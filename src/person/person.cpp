@@ -31,10 +31,6 @@ int Person::getNumberOfLegs() {
     throw new std::exception();
 }
 
-void Person::induceAnxiety() {
-    cout << "Ouch" << endl;
-}
-
 void Person::defineMeaningOfPersonhood() {
     cout << "To be a person is to have coffee without needing to." << endl;
 }
